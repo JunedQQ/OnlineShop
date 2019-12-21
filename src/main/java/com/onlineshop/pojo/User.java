@@ -91,4 +91,20 @@ public class User implements Serializable {
 		this.address = address;
 	}
 
+	@Override
+	public String toString() {
+		return "User{" +
+				"id=" + id +
+				", userName='" + userName + '\'' +
+				", password='" + password + '\'' +
+				", status=" + status +
+				", role=" + role +
+				", userInfo=" + userInfo +
+				", address=" + address +
+				", collect=" + collect +
+				", shopCart=" + shopCart +
+				", orders=" + orders +
+				", createTime=" + createTime +
+				'}';
+	}
 }

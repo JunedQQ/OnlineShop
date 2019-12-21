@@ -18,6 +18,12 @@ public class PayWay implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "PayWay{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				'}';
+	}
 }

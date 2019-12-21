@@ -27,8 +27,13 @@ public class Role implements Serializable {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	
-	
-	
 
+	@Override
+	public String toString() {
+		return "Role{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", remark='" + remark + '\'' +
+				'}';
+	}
 }

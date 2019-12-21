@@ -36,4 +36,13 @@ public class OrderStatus implements Serializable {
     public void setStatusName(String statusName) {
         this.statusName = statusName;
     }
+
+    @Override
+    public String toString() {
+        return "OrderStatus{" +
+                "id=" + id +
+                ", statusName='" + statusName + '\'' +
+                ", orders=" + orders +
+                '}';
+    }
 }

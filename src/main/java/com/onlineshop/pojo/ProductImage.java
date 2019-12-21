@@ -25,6 +25,13 @@ public class ProductImage implements Serializable {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "ProductImage{" +
+				"id=" + id +
+				", url='" + url + '\'' +
+				", product=" + product +
+				'}';
+	}
 }

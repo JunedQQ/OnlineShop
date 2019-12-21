@@ -54,5 +54,17 @@ public class UserInfo implements Serializable {
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "UserInfo{" +
+				"id=" + id +
+				", icon='" + icon + '\'' +
+				", user=" + user +
+				", phone='" + phone + '\'' +
+				", email='" + email + '\'' +
+				", gender=" + gender +
+				", balance=" + balance +
+				'}';
+	}
 }

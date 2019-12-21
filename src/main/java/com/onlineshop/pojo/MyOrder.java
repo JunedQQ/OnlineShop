@@ -116,5 +116,21 @@ public class MyOrder implements Serializable {
         this.completeTime = completeTime;
     }
 
-
+    @Override
+    public String toString() {
+        return "MyOrder{" +
+                "id=" + id +
+                ", orderNumber='" + orderNumber + '\'' +
+                ", user=" + user +
+                ", address=" + address +
+                ", money=" + money +
+                ", number=" + number +
+                ", status=" + status +
+                ", payWay=" + payWay +
+                ", remark='" + remark + '\'' +
+                ", createTime=" + createTime +
+                ", completeTime=" + completeTime +
+                ", items=" + items +
+                '}';
+    }
 }
