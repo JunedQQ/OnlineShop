@@ -10,9 +10,17 @@
         <result property="email" column="email"/>
         <result property="gender" column="gender" />
         <result property="balance" column="balance"/>
+        <result property="nickName" column="nickname"/>
+        <result property="payWayPassword" column="payway_password"/>
     </resultMap>
 
+    <!--根据UserId来查询用户信息-->
     <select id="findUserInfoByUserId" parameterType="int" resultMap="UserInfo">
-        select * from user_info;
+        select * from user_info where user_id = #{userId};
     </select>
+
+    <!--为用户添加用户信息-->
+    <insert id="addUserInfoOnUserId" parameterType="User" >
+        insert into user_info(icon,user_id,nickname) values (#{userInfo.icon},#{id},#{userInfo.nickName});
+    </insert>
 </mapper>

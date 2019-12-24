@@ -4,9 +4,6 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
-  <welcome-file-list>
-    <welcome-file>login.jsp</welcome-file>
-  </welcome-file-list>
   <!--设置spring的监听器-->
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -35,6 +32,12 @@
     <url-pattern>/</url-pattern>
   </servlet-mapping>
 
+  <servlet-mapping>
+    <servlet-name>dispatcherServlet</servlet-name>
+    <url-pattern>/home</url-pattern>
+  </servlet-mapping>
+
+
   <!--配置解决中文乱码的过滤器-->
   <filter>
     <filter-name>characterEncodingFilter</filter-name>
@@ -53,12 +56,16 @@
 
   <error-page>
     <error-code>404</error-code>
-    <location>/WEB-INF/error/404.jsp</location>
+    <location>/WEB-INF/</location>
   </error-page>
 
   <error-page>
     <error-code>500</error-code>
-    <location>/WEB-INF/error/500.jsp</location>
+    <location>/WEB-INF/</location>
   </error-page>
+
+  <welcome-file-list>
+    <welcome-file>home</welcome-file>
+  </welcome-file-list>
 </web-app>
 

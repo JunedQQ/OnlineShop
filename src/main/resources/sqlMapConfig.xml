@@ -16,4 +16,5 @@
     <typeAliases>
         <package name="com.onlineshop.pojo"/>
     </typeAliases>
+
 </configuration>

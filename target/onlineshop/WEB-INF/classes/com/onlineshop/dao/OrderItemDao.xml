@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onlineshop.dao.OrderItemDao">
+    <resultMap id="OrderItem" type="com.onlineshop.pojo.OrderItem">
+        <id property="id" column="id"/>
+        <result property="number" column="number"/>
+        <association property="myOrder" column="order_id"
+            select="com.onlineshop.dao.MyOrderDao.findOrderById"/>
+        <association property="product" column="product_id"
+            select="com.onlineshop.dao.ProductDao.findProductById"/>
+    </resultMap>
+
+    <!--根据id查询订单列表-->
+    <select id="findItemsByOrderId" parameterType="int" resultMap="OrderItem">
+        select * from order_item where id = #{id};
+    </select>
+</mapper>

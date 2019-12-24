@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onlineshop.dao.CollectDao">
+    <resultMap id="Product" type="com.onlineshop.pojo.Product">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="price" column="price" />
+        <result property="stock" column="stock"/>
+        <result property="sell" column="sell"/>
+        <result property="descript" column="descript"/>
+        <result property="status" column="status"/>
+        <result property="createTime" column="create_time"/>
+        <collection property="image" column="id"
+            select="com.onlineshop.dao.ProductImageDao.findProductImageById"/>
+    </resultMap>
+
+    <!--根据用户id查询用户收藏的商品-->
+    <select id="findCollectProductByUserId" parameterType="int" resultMap="Product">
+        select * from product where id in (select product_id from collect where user_id = #{value}  )
+    </select>
+</mapper>

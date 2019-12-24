@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onlineshop.dao.OrderStatusDao">
+    <resultMap id="OrderStatus" type="com.onlineshop.pojo.OrderStatus">
+        <id property="id" column="id"/>
+        <result property="statusName" column="name"/>
+    </resultMap>
+
+    <select id="findOrderStatusById" parameterType="int" resultMap="OrderStatus">
+        select * from orders_status where id=#{value};
+    </select>
+</mapper>

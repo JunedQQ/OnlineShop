@@ -11,7 +11,17 @@ public class UserInfo implements Serializable {
 	private String email; //用户邮箱
 	private int gender; //用户性别
 	private double balance; //用户余额
-	
+	private String nickName;//用户昵称
+	private String payWayPassword; //付款密码
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -55,6 +65,14 @@ public class UserInfo implements Serializable {
 		this.balance = balance;
 	}
 
+	public String getPayWayPassword() {
+		return payWayPassword;
+	}
+
+	public void setPayWayPassword(String payWayPassword) {
+		this.payWayPassword = payWayPassword;
+	}
+
 	@Override
 	public String toString() {
 		return "UserInfo{" +
@@ -65,6 +83,8 @@ public class UserInfo implements Serializable {
 				", email='" + email + '\'' +
 				", gender=" + gender +
 				", balance=" + balance +
+				", nickName='" + nickName + '\'' +
+				", payWayPassword='" + payWayPassword + '\'' +
 				'}';
 	}
 }

@@ -21,5 +21,29 @@
         select * from product where id=#{id};
     </select>
 
+    <!--根据分类id查询商品-->
+    <select id="findProductByCategory" resultMap="Product">
+        select * from product where category_id=#{cateGoryId} 
+        <if test="rows != 0">
+             limit #{start},#{rows};
+        </if>
+    </select>
 
+    <!--根据分类id查询总记录数-->
+    <select id="findCategoryProductTotal" resultType="int">
+        select count(id) from product where category_id=#{categoryId};
+    </select>
+
+    <!--查询所有商品-->
+    <select id="findAllProduct" resultMap="Product">
+        select * from product
+        <if test="rows != 0">
+            limit #{start},#{rows};
+        </if>
+    </select>
+
+    <!--获取商品总数-->
+    <select id="findAllProductTotal" resultType="int">
+        select count(id) from product;
+    </select>
 </mapper>

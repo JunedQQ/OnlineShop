@@ -27,6 +27,13 @@ public interface UserDao {
     User findUserByUserNameToLogin(String userName);
 
     /**
+     * 判断用户是否存在
+     * @param userName
+     * @return
+     */
+    User judgeUserIsExist(String userName);
+
+    /**
      * 添加用户
      * @param user 添加用户实体类
      * @return

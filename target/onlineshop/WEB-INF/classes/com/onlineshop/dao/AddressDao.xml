@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onlineshop.dao.AddressDao">
+    <!--设置别名-->
+    <resultMap id="Address" type="com.onlineshop.pojo.Address">
+        <id property="id" column="id"></id>
+        <result property="addressee" column="addressee"/>
+        <result property="phone" column="phone"/>
+        <result property="province" column="province"/>
+        <result property="city" column="city"/>
+        <result property="area" column="area"/>
+        <result property="address" column="address"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <!--根据用户id查询收货地址-->
+    <select id="findAddressByUserId" parameterType="int" resultMap="Address">
+        select * from address where user_id=#{value};
+    </select>
+
+    <!--根据id查询收货地址-->
+    <select id="findAddressById" parameterType="int" resultMap="Address">
+        select * from address where id=#{value};
+    </select>
+
+</mapper>

@@ -16,9 +16,36 @@
     </context:component-scan>
 
     <!--配置视图解析器-->
-    <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/"/>
-        <property name="suffix" value=".jsp"/>
+    <!--<bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+        <!--<property name="prefix" value="/WEB-INF/"/>-->
+        <!--<property name="suffix" value=".jsp"/>-->
+    <!--</bean>-->
+
+    <!-- 模板解析器 -->
+    <bean id="templateResolver"
+        class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
+        <!-- 模板文件的路径前缀 -->
+        <property name="prefix" value="/WEB-INF/page/"/>
+        <!-- 模板文件的路径后缀 -->
+        <property name="suffix" value=".html"/>
+        <property name="templateMode" value="LEGACYHTML5"/>
+        <!-- 默认编码格式 -->
+        <property name="characterEncoding" value="UTF-8"/>
+        <!-- 配置是否缓存 -->
+        <!-- 默认情况下, 模板缓存为true。如果您想要设置为false -->
+        <property name="cacheable" value="false"/>
+    </bean>
+
+    <!-- 模板引擎 -->
+    <bean id="templateEngine"
+        class="org.thymeleaf.spring5.SpringTemplateEngine">
+        <property name="templateResolver" ref="templateResolver"/>
+    </bean>
+
+    <!-- 视图解析器 -->
+    <bean id="viewResolver" class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
+        <property name="templateEngine" ref="templateEngine"/>
+        <property name="characterEncoding" value="UTF-8"/>
     </bean>
 
     <!--处理静态资源-->
