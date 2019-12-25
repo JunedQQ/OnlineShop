@@ -3,6 +3,7 @@ package com.onlineshop.service;
 import com.onlineshop.pojo.Product;
 import com.onlineshop.utils.Page;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,4 +42,11 @@ public interface ProductService {
      * @return
      */
     int findAllProductTotal();
+
+
+    /**
+     * 模糊查询所有商品
+     * @return
+     */
+    Page<Product> findProductIsFuzzy(String keyword,Page<Product> page);
 }

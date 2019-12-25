@@ -8,6 +8,8 @@
 
     <title>分类主页</title>
 
+    <base th:href="${#request.contextPath}+'/'">
+
     <link th:href="@{/resources/AmazeUI-2.4.2/assets/css/amazeui.css}" rel="stylesheet"
           type="text/css"/>
     <link th:href="@{/resources/AmazeUI-2.4.2/assets/css/admin.css}" rel="stylesheet"
@@ -30,30 +32,28 @@
         <div class="topMessage">
             <div class="menu-hd" th:switch="${session.user != null}">
 
-                <a th:href="@{login}" target="_top" class="h" th:case="false"
-                   style="color: #F22E00;">亲，请<span
-                >登录</span><a href="WEB-INF/page/register.html" target="_top"> 免费注册 </a></a>
-                <a href="WEB-INF/page/home.html" th:case="true"
-                   th:text="'欢迎您：'+${session.user.userInfo.getNickName()}"></a>
+                <a th:href="@{/login}" target="_top" class="h" th:case="false" style="color: #F22E00;">亲，请<span
+                >登录</span><a th:href="@{/register}"  target="_top"> 免费注册 </a></a>
+                <a th:href="@{/personal_center}"  th:case="true" th:text="'欢迎您：'+${session.user?.userInfo?.nickName}"></a>
             </div>
         </div>
     </ul>
     <ul class="message-r">
         <div class="topMessage home">
-            <div class="menu-hd"><a href="WEB-INF/page/home.html" target="_top" class="h">商城首页</a>
+            <div class="menu-hd"><a th:href="@{/home}" target="_top" class="h">商城首页</a>
             </div>
         </div>
         <div class="topMessage my-shangcheng">
-            <div class="menu-hd MyShangcheng"><a href="WEB-INF/page/order.html" target="_top"><i
+            <div class="menu-hd MyShangcheng"><a th:href="@{/personal_center}" target="_top"><i
                     class="am-icon-user am-icon-fw"></i>个人中心</a></div>
         </div>
         <div class="topMessage mini-cart">
-            <div class="menu-hd"><a id="mc-menu-hd" href="WEB-INF/page/order.html" target="_top"><i
+            <div class="menu-hd"><a id="mc-menu-hd" th:href="@{/shopcart}" target="_top"><i
                     class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong
                     id="J_MiniCartNum" class="h">0</strong></a></div>
         </div>
         <div class="topMessage favorite">
-            <div class="menu-hd"><a href="WEB-INF/page/collection.html" target="_top"><i
+            <div class="menu-hd"><a th:href="@{/collection}" target="_top"><i
                     class="am-icon-heart am-icon-fw"></i><span>收藏夹</span></a></div>
         </div>
     </ul>
@@ -84,7 +84,7 @@
             <div class="long-title"><span class="all-goods">全部分类</span></div>
             <div class="nav-cont">
                 <ul>
-                    <li class="index"><a href="../home/home.html">首页</a></li>
+                    <li class="index"><a th:href="@{/home}">首页</a></li>
                     <li class="qc"><a href="#">闪购</a></li>
                     <li class="qc"><a href="#">限时抢</a></li>
                     <li class="qc"><a href="#">团购</a></li>
@@ -99,7 +99,7 @@
                 <div class="theme-popover">
                     <ul class="select">
                         <p class="title font-normal">
-                            <span class="total fl">共有<strong class="num" th:text="${session.categoryProduct.get(session.currentCateId).getTotalCount()}">997</strong>件相关商品</span>
+                            <span class="total fl">共有<strong class="num" th:text="${session.categoryProduct?.get(session.currentCateId).getTotalCount()}">997</strong>件相关商品</span>
                         </p>
                         <div class="clear"></div>
                         <li class="select-result">
@@ -138,7 +138,7 @@
 
                     <ul class="am-avg-sm-2 am-avg-md-3 am-avg-lg-4 boxes">
                         <li th:each="product,iterStat:${session.categoryProduct.get(session.currentCateId).getRowsList()}">
-                            <div class="i-pic limit" style="margin-bottom: 10px">
+                            <div class="i-pic limit" style="margin-bottom: 10px" th:onclick="|toProductDetails(${product.getId()})|">
                                 <img th:src="${product.image?.get(0).getUrl()}"
                                      style="height: 300px;width: 100%;"/>
                                 <p class="title fl" th:text="${product.name}">【良品铺子旗舰店】手剥松子218g
@@ -173,7 +173,7 @@
         <div class="footer ">
             <div class="footer-hd ">
                 <p style="text-align: center">
-                    <a th:href="@{home}">商城首页</a>
+                    <a th:href="@{/home}">商城首页</a>
                     <b>|</b>
                     <a href="https://www.alipay.com">支付宝</a>
                     <b>|</b>
@@ -363,7 +363,13 @@
     window.jQuery || document.write('<script src="basic/js/jquery-1.9.min.js"><\/script>');
 </script>
 <script type="text/javascript" src="../basic/js/quick_links.js"></script>
-
+<script>
+    function toProductDetails(data) {
+        var path = "[[@{/product/product_details}]]";
+        var requestPath = path +"?productId="+data;
+        window.location = requestPath;
+    }
+</script>
 <div class="theme-popover-mask"></div>
 
 </body>

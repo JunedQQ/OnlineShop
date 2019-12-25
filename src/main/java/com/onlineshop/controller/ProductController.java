@@ -3,13 +3,16 @@ package com.onlineshop.controller;
 import com.onlineshop.pojo.Product;
 import com.onlineshop.service.ProductService;
 import com.onlineshop.utils.Page;
+import com.onlineshop.utils.ProductUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,19 +31,14 @@ public class ProductController {
     private ProductService productService;
 
     @RequestMapping("/getCategoryProduct")
-    public ModelAndView getCategoryProduct(ModelAndView model, Page<Product> page, int categoryId, HttpServletRequest request) {
-        //判断page对象是否为空
-        if (page == null) {
-            page = new Page<>();
-            //默认设置当前页为1
-            page.setCurrentPage(1);
-            //默认设置每页显示20条数据
-            page.setRows(20);
-        }
-        //设置默认每页显示条数
-        if (page.getRows() == 0) {
-            page.setRows(20);
-        }
+    public ModelAndView getCategoryProduct(ModelAndView model,
+                                           @RequestParam(required = false,defaultValue = "1") int currentPage,
+                                           @RequestParam(required = false,defaultValue = "20") int rows,
+                                           @RequestParam(required = false,defaultValue = "-1") int categoryId,
+                                           HttpServletRequest request) {
+        Page<Product> page = new Page<>();
+        page.setRows(rows);
+        page.setCurrentPage(currentPage);
         //设置默认当前页面
         if (page.getCurrentPage() < 1) {
             page.setCurrentPage(1);
@@ -77,4 +75,49 @@ public class ProductController {
         model.setViewName("forward:/category");
         return model;
     }
+
+
+    @RequestMapping("/product_details")
+    public ModelAndView productDetails(ModelAndView model,int productId,HttpServletRequest request){
+        //获取商品相关信息
+        Product product = productService.findProductById(productId);
+        //处理详情信息
+        String desc = product.getDescript();
+        List<String> list = ProductUtil.productDescManage(desc);
+        //把商品信息存放至request中
+        request.setAttribute("productDesc",product);
+        request.setAttribute("descList",list);
+        model.setViewName("forward:/introduction");
+        return model;
+    }
+
+    @RequestMapping("/search_product")
+    public ModelAndView searchProduct(String keyword,
+                                      @RequestParam(required = false,defaultValue = "1") int currentPage,
+                                      @RequestParam(required = false,defaultValue = "20") int rows,
+                                      HttpServletRequest request,ModelAndView modelAndView){
+        //设置分页信息
+        Page<Product> page = new Page<>();
+        page.setRows(rows);
+        page.setCurrentPage(currentPage);
+        //设置默认当前页面
+        if (page.getCurrentPage() < 1) {
+            page.setCurrentPage(1);
+        }
+        //获取商品信息
+        Page<Product> searchProduct = productService.findProductIsFuzzy(keyword, page);
+        //如果总页数为0，则设置默认总页数
+        if (page.getTotalPage() == 0){
+            page.setTotalPage(1);
+        }
+        //把信息存入request中
+        request.setAttribute("searchProduct",searchProduct);
+        request.setAttribute("keyword",keyword);
+        //转发
+        modelAndView.setViewName("forward:/search");
+        return modelAndView;
+    }
+
+
+
 }

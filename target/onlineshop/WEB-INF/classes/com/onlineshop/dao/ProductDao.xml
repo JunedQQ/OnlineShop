@@ -46,4 +46,17 @@
     <select id="findAllProductTotal" resultType="int">
         select count(id) from product;
     </select>
+
+
+    <!--查询出来的总数据-->
+    <select id="findProductIsFuzzyTotal" resultType="int">
+        select count(id) from product where name like #{keyword};
+    </select>
+
+    <select id="findProductIsFuzzy" resultMap="Product">
+        select * from product where name like #{keyword}
+        <if test="rows != 0">
+             limit #{start},#{rows};
+        </if>
+    </select>
 </mapper>

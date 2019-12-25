@@ -27,6 +27,19 @@
     <load-on-startup>1</load-on-startup>
   </servlet>
 
+  <!--处理静态资源-->
+  <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>*.js</url-pattern>
+    <url-pattern>*.css</url-pattern>
+    <url-pattern>*.jpg</url-pattern>
+    <url-pattern>*.png</url-pattern>
+    <url-pattern>*.gif</url-pattern>
+    <url-pattern>/assets/*"</url-pattern>
+    <url-pattern>/images/*</url-pattern>
+    <url-pattern>/resources/*</url-pattern>
+  </servlet-mapping>
+
   <servlet-mapping>
     <servlet-name>dispatcherServlet</servlet-name>
     <url-pattern>/</url-pattern>
@@ -56,12 +69,12 @@
 
   <error-page>
     <error-code>404</error-code>
-    <location>/WEB-INF/</location>
+    <location>/404</location>
   </error-page>
 
   <error-page>
     <error-code>500</error-code>
-    <location>/WEB-INF/</location>
+    <location>/500</location>
   </error-page>
 
   <welcome-file-list>

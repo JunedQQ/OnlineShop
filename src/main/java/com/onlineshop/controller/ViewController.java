@@ -44,9 +44,9 @@ public class ViewController {
         return modelAndView;
     }
 
-    @RequestMapping("/information")
+    @RequestMapping("/user_message")
     public ModelAndView information(ModelAndView modelAndView){
-        modelAndView.setViewName(ViewPage.INFORMATION);
+        modelAndView.setViewName(ViewPage.USER_MESSAGE);
         return modelAndView;
     }
 
@@ -105,7 +105,7 @@ public class ViewController {
         return modelAndView;
     }
 
-    @RequestMapping("/shop_cart")
+    @RequestMapping("/shopcart")
     public ModelAndView shop_cart(ModelAndView modelAndView){
         modelAndView.setViewName(ViewPage.SHOPCART);
         return modelAndView;
@@ -121,6 +121,18 @@ public class ViewController {
     public ModelAndView success(ModelAndView modelAndView){
         modelAndView.setViewName(ViewPage.SUCCESS);
         return modelAndView;
+    }
+
+    @RequestMapping("/404")
+    public ModelAndView error404(ModelAndView model){
+        model.setViewName(ViewPage.ERROR_404);
+        return model;
+    }
+
+    @RequestMapping("/500")
+    public ModelAndView error500(ModelAndView model){
+        model.setViewName(ViewPage.ERROR_500);
+        return model;
     }
 
 }

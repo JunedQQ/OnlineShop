@@ -37,6 +37,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findUserById(int userId) {
+        return userDao.findUserById(userId);
+    }
+
+    @Override
     public boolean judgeUserIsExist(String userName) {
         User user = userDao.judgeUserIsExist(userName);
         if (user == null){
@@ -60,5 +65,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public int updateUserPassWord(User user) {
         return userDao.updateUserPassWord(user);
+    }
+
+    @Override
+    public int updateUserInfo(User user) {
+        return userInfoDao.updateUserInfo(user);
     }
 }

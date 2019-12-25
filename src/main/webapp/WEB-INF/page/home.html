@@ -24,32 +24,35 @@
 <body>
 <div class="hmtop">
     <!--顶部导航条 -->
-    <div class="am-container header" style="background-color:#F5F5F5;width: 100%;padding-left: 18%;padding-right: 18%;max-width: 1920px">
+    <div class="am-container header"
+         style="background-color:#F5F5F5;width: 100%;padding-left: 18%;padding-right: 18%;max-width: 1920px">
         <ul class="message-l">
             <div class="topMessage">
                 <div class="menu-hd" th:switch="${session.user != null}">
 
-                    <a th:href="@{login}" target="_top" class="h" th:case="false" style="color: #F22E00;">亲，请<span
-                            >登录</span><a href="register.html"  target="_top"> 免费注册 </a></a>
-                    <a href="home.html"  th:case="true" th:text="'欢迎您：'+${session.user.userInfo.getNickName()}"></a>
+                    <a th:href="@{login}" target="_top" class="h" th:case="false"
+                       style="color: #F22E00;">亲，请<span
+                    >登录</span><a th:href="@{register}" target="_top"> 免费注册 </a></a>
+                    <a th:href="@{personal_center}" th:case="true"
+                       th:text="'欢迎您：'+${session.user?.userInfo?.nickName}"></a>
                 </div>
             </div>
         </ul>
         <ul class="message-r">
             <div class="topMessage home">
-                <div class="menu-hd"><a href="home.html" target="_top" class="h">商城首页</a></div>
+                <div class="menu-hd"><a th:href="@{home}" target="_top" class="h">商城首页</a></div>
             </div>
             <div class="topMessage my-shangcheng">
-                <div class="menu-hd MyShangcheng"><a href="personal_center.html" target="_top"><i
+                <div class="menu-hd MyShangcheng"><a th:href="@{personal_center}" target="_top"><i
                         class="am-icon-user am-icon-fw"></i>个人中心</a></div>
             </div>
             <div class="topMessage mini-cart">
-                <div class="menu-hd"><a id="mc-menu-hd" href="shopcart.html" target="_top"><i
+                <div class="menu-hd"><a id="mc-menu-hd" th:href="@{shopcart}" target="_top"><i
                         class="am-icon-shopping-cart  am-icon-fw"></i><span>购物车</span><strong
                         id="J_MiniCartNum" class="h">0</strong></a></div>
             </div>
             <div class="topMessage favorite">
-                <div class="menu-hd"><a href="collection.html" target="_top"><i
+                <div class="menu-hd"><a th:href="@{collection}" target="_top"><i
                         class="am-icon-heart am-icon-fw"></i><span>收藏夹</span></a></div>
             </div>
         </ul>
@@ -64,13 +67,13 @@
         </div>
 
         <div class="search-bar pr">
-            <a name="index_none_header_sysc" href="#"></a>
-            <form>
-                <input id="searchInput" name="index_none_header_sysc" type="text" placeholder="搜索商品"
-                       autocomplete="off" style="padding-left: 10px;font-size: 16px;">
-                <input id="ai-topsearch" class="submit am-btn" value="搜索" index="1" type="submit">
-            </form>
-        </div>
+        <a name="index_none_header_sysc" href="#"></a>
+        <form th:action="@{/product/search_product}" method="post">
+            <input id="searchInput" name="keyword" type="text" placeholder="搜索商品"
+                   autocomplete="off" style="padding-left: 10px;font-size: 16px;">
+            <input id="ai-topsearch" class="submit am-btn" value="搜索" index="1" type="submit">
+        </form>
+    </div>
     </div>
 
     <div class="clear"></div>
@@ -80,7 +83,7 @@
 <div class="banner">
     <div class="am-slider am-slider-default scoll" data-am-flexslider id="demo-slider-0">
         <ul class="am-slides">
-            <li class="banner1"><a href="introduction.html"><img
+            <li class="banner1"><a href="#"><img
                     th:src="@{/resources/images/ad1.jpg}"/></a></li>
             <li class="banner2"><a><img th:src="@{/resources/images/ad2.jpg}"/></a></li>
             <li class="banner3"><a><img th:src="@{/resources/images/ad3.jpg}"/></a></li>
@@ -96,7 +99,7 @@
         <div class="long-title"><span class="all-goods">全部分类</span></div>
         <div class="nav-cont">
             <ul>
-                <li class="index"><a href="home.html">首页</a></li>
+                <li class="index"><a th:href="@{home}">首页</a></li>
                 <li class="qc"><a href="#">闪购</a></li>
                 <li class="qc"><a href="#">限时抢</a></li>
                 <li class="qc"><a href="#">团购</a></li>
@@ -113,11 +116,14 @@
                         <ul class="category-list" id="js_climit_li">
 
                             <!--分类-->
-                            <li class="appliance js_toggle relative first" th:each="cateGory,iterStat:${category}">
-                                <div class="category-info" >
-                                    <h3 class="category-name b-category-name  home_category" style="cursor: pointer;" th:onclick="|categoryOnClick(${cateGory.id})|"><i><img
+                            <li class="appliance js_toggle relative first"
+                                th:each="cateGory,iterStat:${category}">
+                                <div class="category-info">
+                                    <h3 class="category-name b-category-name  home_category"
+                                        style="cursor: pointer;"
+                                        th:onclick="|categoryOnClick(${cateGory?.id})|"><i><img
                                             th:src="@{'/resources/images/home_'+'{index}'+'.png'(index=${iterStat.index})}"></i><a
-                                            class="ml-22"  th:text="${cateGory.name}">点心/蛋糕</a></h3>
+                                            class="ml-22" th:text="${cateGory?.name}">点心/蛋糕</a></h3>
                                     <em>&gt;</em></div>
                                 <b class="arrow"></b>
                             </li>
@@ -171,7 +177,6 @@
         </div>
 
         <!--走马灯 -->
-
         <div class="marqueen">
             <span class="marqueen-title">商城头条</span>
             <div class="demo">
@@ -189,17 +194,16 @@
 
                     <div class="mod-vip">
                         <div class="m-baseinfo">
-                            <a href="personal_center.html">
-                                <img th:src="@{/resources/images/getAvatar.do.jpg}">
+                            <a th:href="personal_center">
+                                <img th:src="${(session.user?.userInfo?.icon != null && !#strings.isEmpty(session.user?.userInfo?.icon)) ? session.user?.userInfo?.icon:#request.contextPath + '/resources/images/getAvatar.do.jpg'}">
                             </a>
                             <em>
-                                Hi,<span class="s-name">小叮当</span>
-                                <a href="#"><p>点击更多优惠活动</p></a>
+                                Hi,<span class="s-name" th:text="${session.user?.userInfo?.nickName == null && #strings.isEmpty(session.user?.userInfo?.nickName) ? '请先登录':session.user?.userInfo?.nickName}">小叮当</span>
                             </em>
                         </div>
-                        <div class="member-logout">
+                        <div class="member-logout" th:style="'display:'+${session==null ? '':'none'}">
                             <a class="am-btn-warning btn" th:href="@{login}">登录</a>
-                            <a class="am-btn-warning btn" href="register.html">注册</a>
+                            <a class="am-btn-warning btn" th:href="@{register}">注册</a>
                         </div>
                         <div class="member-login">
                             <a href="#"><strong>0</strong>待收货</a>
@@ -703,20 +707,20 @@
 
         </div>
 
+        <!--页脚-->
         <div class="footer ">
             <div class="footer-hd ">
-                <p>
-                    <a href="home.html">商城首页</a>
+                <p style="text-align: center">
+                    <a th:href="@{home}">商城首页</a>
                     <b>|</b>
-                    <a href="# ">支付宝</a>
+                    <a href="https://www.alipay.com">支付宝</a>
+                    <b>|</b>
+                    <a href="">联系我们</a>
                 </p>
             </div>
             <div class="footer-bd ">
-                <p>
-                    <a href="# ">合作伙伴</a>
-                    <a href="# ">联系我们</a>
-                    <a href="# ">网站地图</a>
-                    <em>© 2015-2025 Hengwang.com 版权所有</em>
+                <p style="text-align: center">
+                    <em>© 2019 jzxaqj.xyz 版权所有</em>
                 </p>
             </div>
         </div>
@@ -729,8 +733,8 @@
 <div class="navCir">
     <li class="active"><a href="home.html"><i class="am-icon-home "></i>首页</a></li>
     <li><a href="sort.html"><i class="am-icon-list"></i>分类</a></li>
-    <li><a href="shopcart.html"><i class="am-icon-shopping-basket"></i>购物车</a></li>
-    <li><a href="personal_center.html"><i class="am-icon-user"></i>我的</a></li>
+    <li><a th:href="${shopcart}"><i class="am-icon-shopping-basket"></i>购物车</a></li>
+    <li><a href="${personal_center}"><i class="am-icon-user"></i>我的</a></li>
 </div>
 <!--菜单 -->
 <div class=tip>
@@ -901,7 +905,7 @@
 <script type="text/javascript " th:src="@{/resources/basic/js/quick_links.js} "></script>
 <script>
     function categoryOnClick(data) {
-        window.location = "product/getCategoryProduct?categoryId="+data;
+        window.location = "product/getCategoryProduct?categoryId=" + data;
     }
 
 </script>

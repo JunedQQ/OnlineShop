@@ -23,4 +23,9 @@
     <insert id="addUserInfoOnUserId" parameterType="User" >
         insert into user_info(icon,user_id,nickname) values (#{userInfo.icon},#{id},#{userInfo.nickName});
     </insert>
+
+    <!--更改用户信息-->
+    <update id="updateUserInfo" parameterType="User">
+        update user_info set phone=#{userInfo.phone},email=#{userInfo.email},gender=#{userInfo.gender},nickname=#{userInfo.nickName} where user_id = #{id};
+    </update>
 </mapper>

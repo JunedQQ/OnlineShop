@@ -2,6 +2,7 @@ package com.onlineshop.dao;
 
 
 import com.onlineshop.pojo.Product;
+import com.onlineshop.utils.Page;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -50,4 +51,21 @@ public interface ProductDao {
      * @return
      */
     int findAllProductTotal();
+
+    /**
+     * 模糊查询所有商品
+     * @param keyword 关键字
+     * @param start 开始位置
+     * @param rows 每页条数
+     * @return
+     */
+    List<Product> findProductIsFuzzy(@Param("keyword") String keyword,@Param("start") int start, @Param("rows") int rows);
+
+
+    /**
+     * 模糊查询的总条数
+     * @param keyword
+     * @return
+     */
+    int findProductIsFuzzyTotal(String keyword);
 }

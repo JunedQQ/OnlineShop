@@ -23,6 +23,12 @@ public interface UserService {
      */
     User findUserByUserNameToLogin(String userName);
 
+    /**
+     * 根据用户名来查找用户信息
+     * @param userId 用户名
+     * @return
+     */
+    User findUserById(int userId);
 
     /**
      * 判断用户是否存在
@@ -44,5 +50,13 @@ public interface UserService {
      * @return
      */
     int updateUserPassWord(User user);
+
+
+    /**
+     * 修改用户信息
+     * @param user
+     * @return
+     */
+    int updateUserInfo(User user);
 
 }

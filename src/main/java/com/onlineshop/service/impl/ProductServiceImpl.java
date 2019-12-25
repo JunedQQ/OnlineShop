@@ -63,4 +63,22 @@ public class ProductServiceImpl implements ProductService {
     public int findAllProductTotal() {
         return productDao.findAllProductTotal();
     }
+
+    @Override
+    public Page<Product> findProductIsFuzzy(String keyword, Page<Product> page) {
+        //对关键字进行处理
+        keyword = "%" + keyword + "%";
+        //查询数据
+        int total = productDao.findProductIsFuzzyTotal(keyword);
+        int currentPage = page.getCurrentPage();
+        int rows = page.getRows();
+        int start = (currentPage - 1) * rows;
+        int totalPage = total % rows == 0 ? total/rows:(total/rows)+1;
+        List<Product> rowList = productDao.findProductIsFuzzy(keyword, start, rows);
+        //设置数据
+        page.setTotalCount(total);
+        page.setTotalPage(totalPage);
+        page.setRowsList(rowList);
+        return page;
+    }
 }

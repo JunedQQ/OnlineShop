@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport"
@@ -23,7 +22,6 @@
 
 <body>
 
-<!--顶部导航条 -->
 <div class="am-container header"
      style="background-color:#F5F5F5;width: 100%;padding-left: 18%;padding-right: 18%;max-width: 1920px">
     <ul class="message-l">
@@ -54,10 +52,9 @@
         <div class="topMessage favorite">
             <div class="menu-hd"><a href="collection.html" target="_top"><i
                     class="am-icon-heart am-icon-fw"></i><span>收藏夹</span></a></div>
-        </div></ul>
+        </div>
+    </ul>
 </div>
-
-<!--悬浮搜索框-->
 
 <div class="nav white">
     <div class="logo"><img th:src="@{/resources/images/logo.png}"/></div>
@@ -67,8 +64,8 @@
 
     <div class="search-bar pr">
         <a name="index_none_header_sysc" href="#"></a>
-        <form>
-            <input id="searchInput" name="index_none_header_sysc" type="text" placeholder="搜索商品"
+        <form th:action="@{/product/search_product}" method="post">
+            <input id="searchInput" name="keyword" type="text" placeholder="搜索商品" th:value="${keyword}"
                    autocomplete="off" style="padding-left: 10px;font-size: 16px;">
             <input id="ai-topsearch" class="submit am-btn" value="搜索" index="1" type="submit">
         </form>
@@ -83,7 +80,7 @@
             <div class="long-title"><span class="all-goods">全部分类</span></div>
             <div class="nav-cont">
                 <ul>
-                    <li class="index"><a href="home.html">首页</a></li>
+                    <li class="index"><a href="../home/home.html">首页</a></li>
                     <li class="qc"><a href="#">闪购</a></li>
                     <li class="qc"><a href="#">限时抢</a></li>
                     <li class="qc"><a href="#">团购</a></li>
@@ -96,68 +93,11 @@
         <div class="am-g am-g-fixed">
             <div class="am-u-sm-12 am-u-md-12">
                 <div class="theme-popover">
-                    <div class="searchAbout">
-                        <span class="font-pale">相关搜索：</span>
-                        <a title="坚果" href="#">坚果</a>
-                        <a title="瓜子" href="#">瓜子</a>
-                        <a title="鸡腿" href="#">豆干</a>
-
-                    </div>
                     <ul class="select">
                         <p class="title font-normal">
-                            <span class="fl">松子</span>
-                            <span class="total fl">搜索到<strong class="num">997</strong>件相关商品</span>
+                            <span class="total fl">搜索到<strong class="num"
+                                                              th:text="${searchProduct?.totalCount}">997</strong>件相关商品</span>
                         </p>
-                        <div class="clear"></div>
-                        <li class="select-result">
-                            <dl>
-                                <dt>已选</dt>
-                                <dd class="select-no"></dd>
-                                <p class="eliminateCriteria">清除</p>
-                            </dl>
-                        </li>
-                        <div class="clear"></div>
-                        <li class="select-list">
-                            <dl id="select1">
-                                <dt class="am-badge am-round">品牌</dt>
-
-                                <div class="dd-conent">
-                                    <dd class="select-all selected"><a href="#">全部</a></dd>
-                                    <dd><a href="#">百草味</a></dd>
-                                    <dd><a href="#">良品铺子</a></dd>
-                                    <dd><a href="#">新农哥</a></dd>
-                                    <dd><a href="#">楼兰蜜语</a></dd>
-                                    <dd><a href="#">口水娃</a></dd>
-                                    <dd><a href="#">考拉兄弟</a></dd>
-                                </div>
-
-                            </dl>
-                        </li>
-                        <li class="select-list">
-                            <dl id="select2">
-                                <dt class="am-badge am-round">种类</dt>
-                                <div class="dd-conent">
-                                    <dd class="select-all selected"><a href="#">全部</a></dd>
-                                    <dd><a href="#">东北松子</a></dd>
-                                    <dd><a href="#">巴西松子</a></dd>
-                                    <dd><a href="#">夏威夷果</a></dd>
-                                    <dd><a href="#">松子</a></dd>
-                                </div>
-                            </dl>
-                        </li>
-                        <li class="select-list">
-                            <dl id="select3">
-                                <dt class="am-badge am-round">选购热点</dt>
-                                <div class="dd-conent">
-                                    <dd class="select-all selected"><a href="#">全部</a></dd>
-                                    <dd><a href="#">手剥松子</a></dd>
-                                    <dd><a href="#">薄壳松子</a></dd>
-                                    <dd><a href="#">进口零食</a></dd>
-                                    <dd><a href="#">有机零食</a></dd>
-                                </div>
-                            </dl>
-                        </li>
-
                     </ul>
                     <div class="clear"></div>
                 </div>
@@ -172,10 +112,12 @@
 
                     <ul class="am-avg-sm-2 am-avg-md-3 am-avg-lg-4 boxes">
 
-                        <li th:each="product,iterStat:${session.categoryProduct.get(1)}">
-                            <div class="i-pic limit" style="margin-bottom: 10px">
-                                <img th:src="${product.image?.get(0).getUrl()}"  style="height: 300px;width: 100%;"/>
-                                <p class="title fl" th:text="${product.name}">【良品铺子旗舰店】手剥松子218g 坚果炒货零食新货巴西松子包邮</p>
+                        <li th:each="product,iterStat:${searchProduct.rowsList}">
+                            <div class="i-pic limit" style="margin-bottom: 10px" th:onclick="|toProductDetails(${product.getId()})|">
+                                <img th:src="${product.image?.get(0).getUrl()}"
+                                     style="height: 300px;width: 100%;"/>
+                                <p class="title fl" th:text="${product.name}">【良品铺子旗舰店】手剥松子218g
+                                    坚果炒货零食新货巴西松子包邮</p>
                                 <p class="price fl">
                                     <b>¥</b>
                                     <strong th:text="${product.price}">56.90</strong>
@@ -188,41 +130,39 @@
 
                     </ul>
                 </div>
+                <div class="clear"></div>
+                <!--分页 -->
+                <ul class="am-pagination am-pagination-right">
+                    <li class="am-disabled"><a href="#">&laquo;</a></li>
+                    <li th:each="i:${#numbers.sequence(1,searchProduct?.totalPage)}"
+                        th:class="${i == searchProduct?.currentPage ? 'am-active':''} ">
+                        <a th:href="${(searchProduct?.currentPage < i) ? '/product/search_product?keyword='+ keyword +'&currentPage='+ i : ''}"
+                           th:text="${i}">2</a>
+                    </li>
+                    <li><a href="#">&raquo;</a></li>
+                </ul>
+
             </div>
-            <!--分页 -->
-            <ul class="am-pagination am-pagination-right">
-                <li class="am-disabled"><a href="#">&laquo;</a></li>
-                <li class="am-active"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#">&raquo;</a></li>
-            </ul>
         </div>
-        <div class="footer">
-            <div class="footer-hd">
-                <p>
-                    <a href="#">恒望科技</a>
+        <!--页脚-->
+        <div class="footer ">
+            <div class="footer-hd ">
+                <p style="text-align: center">
+                    <a th:href="@{home}">商城首页</a>
                     <b>|</b>
-                    <a href="home.html">商城首页</a>
+                    <a href="https://www.alipay.com">支付宝</a>
                     <b>|</b>
-                    <a href="#">支付宝</a>
-                    <b>|</b>
-                    <a href="#">物流</a>
+                    <a href="">联系我们</a>
                 </p>
             </div>
-            <div class="footer-bd">
-                <p>
-                    <a href="#">关于恒望</a>
-                    <a href="#">合作伙伴</a>
-                    <a href="#">联系我们</a>
-                    <a href="#">网站地图</a>
-                    <em>© 2015-2025 Hengwang.com 版权所有</em>
+            <div class="footer-bd ">
+                <p style="text-align: center">
+                    <em>© 2019 jzxaqj.xyz 版权所有</em>
                 </p>
             </div>
         </div>
     </div>
+</div>
 
 </div>
 
@@ -397,9 +337,17 @@
     </div>
 </div>
 <script>
-    window.jQuery || document.write('<script th:src="basic/js/jquery-1.9.min.js"><\/script>');
+    window.jQuery || document.write('<script src="basic/js/jquery-1.9.min.js"><\/script>');
 </script>
-<script type="text/javascript" th:src="@{/resources/basic/js/quick_links.js}"></script>
+<script type="text/javascript" src="../basic/js/quick_links.js"></script>
+
+<script>
+    function toProductDetails(data) {
+        var path = "[[@{/product/product_details}]]";
+        var requestPath = path +"?productId="+data;
+        window.location = requestPath;
+    }
+</script>
 
 <div class="theme-popover-mask"></div>
 

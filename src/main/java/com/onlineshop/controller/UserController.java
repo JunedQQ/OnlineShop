@@ -8,6 +8,7 @@ import com.onlineshop.utils.MD5;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -37,7 +38,6 @@ public class UserController {
     @RequestMapping("/login_verify")
     public Map<String, Object> login_verify(User loginUser, HttpServletRequest request) {
         Map<String, Object> map = new HashMap<>();
-        System.out.println("登录");
         if (loginUser == null) {
             map.put("type", "error");
             map.put("msg", "请输入用户名");
@@ -117,6 +117,27 @@ public class UserController {
 
         }
         return map;
+    }
+
+    @RequestMapping("/change_user_message")
+    public Map<String, Object> changeUserMessage(UserInfo userInfo,int userId,HttpServletRequest request){
+        Map<String, Object> map = new HashMap<>();
+        //设置用户信息
+        User user = new User();
+        user.setUserInfo(userInfo);
+        user.setId(userId);
+        //更改用户信息
+        int result = userService.updateUserInfo(user);
+        if (result < 1){
+            map.put("type", "error");
+            map.put("msg", "用户信息修改失败");
+        }else {
+            User resultUser = userService.findUserById(user.getId());
+            request.getSession().setAttribute("user", user);
+            map.put("type", "success");
+            map.put("msg", "用户信息修改成功");
+        }
+        return  map;
     }
 
 }

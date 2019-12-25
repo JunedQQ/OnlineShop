@@ -12,7 +12,7 @@ public class ViewPage {
     public static final String COMMENT = "comment";
     public static final String COMMENT_LIST = "commentlist";
     public static final String HOME = "home";
-    public static final String INFORMATION = "information";
+    public static final String USER_MESSAGE = "user_message";
     public static final String INTRODUCTION = "introduction";
     public static final String LOGIN = "login";
     public static final String NEWS = "news";
@@ -27,4 +27,7 @@ public class ViewPage {
     public static final String SHOPCART = "shopcart";
     public static final String CATEGORY = "category";
     public static final String SUCCESS = "success";
+    public static final String ERROR_404 = "error/404";
+    public static final String ERROR_500 = "error/500";
+
 }

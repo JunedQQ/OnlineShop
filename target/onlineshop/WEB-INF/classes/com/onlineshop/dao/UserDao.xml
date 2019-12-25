@@ -30,6 +30,11 @@
         select * from user where username=#{value};
     </select>
 
+    <!--根据id来查找用户信息-->
+    <select id="findUserById" parameterType="int" resultMap="User">
+        select * from user where id=#{id};
+    </select>
+
     <!--根据用户名来查询用户登录信息-->
     <select id="findUserByUserNameToLogin" parameterType="String" resultMap="User">
         select password,status from user where username=#{username};

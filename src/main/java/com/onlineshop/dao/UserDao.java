@@ -20,6 +20,13 @@ public interface UserDao {
     User findUserByUserName(String userName);
 
     /**
+     * 根据用户名来查找用户信息
+     * @param userId 用户名
+     * @return
+     */
+    User findUserById(int userId);
+
+    /**
      * 根据用户名来查找用户登录信息
      * @param userName
      * @return
